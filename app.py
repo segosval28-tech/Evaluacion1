@@ -91,10 +91,20 @@ st.markdown(
             background: #ffffff !important;
             box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
         }
+        [data-testid="stSidebar"] div[data-baseweb="select"] * {
+            color: #0f172a !important;
+            -webkit-text-fill-color: #0f172a !important;
+            text-shadow: none !important;
+            opacity: 1 !important;
+        }
         [data-testid="stSidebar"] div[data-baseweb="select"] span,
+        [data-testid="stSidebar"] div[data-baseweb="select"] p,
         [data-testid="stSidebar"] div[data-baseweb="select"] input,
+        [data-testid="stSidebar"] div[data-baseweb="select"] [role="combobox"],
+        [data-testid="stSidebar"] div[data-baseweb="select"] [data-testid="stMarkdownContainer"],
         [data-testid="stSidebar"] div[data-baseweb="select"] div {
             color: #0f172a !important;
+            -webkit-text-fill-color: #0f172a !important;
             opacity: 1 !important;
             font-weight: 700;
         }
@@ -154,6 +164,29 @@ st.markdown(
         .small-muted {
             color: var(--muted);
             font-size: 0.92rem;
+        }
+        .active-section-box {
+            margin-top: 12px;
+            padding: 12px 13px;
+            border: 1px solid rgba(34, 211, 238, 0.32);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.10);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
+        }
+        .active-section-box span {
+            display: block;
+            color: rgba(234, 246, 251, 0.72) !important;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0;
+            text-transform: uppercase;
+        }
+        .active-section-box strong {
+            display: block;
+            margin-top: 4px;
+            color: #ffffff !important;
+            font-size: 17px;
+            line-height: 1.2;
         }
         h1, h2, h3 {
             color: #0f2338;
@@ -676,6 +709,15 @@ def main():
     seccion = st.sidebar.selectbox(
         "Seleccione una seccion",
         ["Home", "Ejercicio 1", "Ejercicio 2", "Ejercicio 3", "Ejercicio 4"],
+    )
+    st.sidebar.markdown(
+        f"""
+        <div class="active-section-box">
+            <span>Seccion activa</span>
+            <strong>{seccion}</strong>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
 
     if seccion == "Home":
