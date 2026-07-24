@@ -54,34 +54,177 @@ st.set_page_config(
 st.markdown(
     """
     <style>
+        :root {
+            --navy: #082f49;
+            --blue: #0f6ea8;
+            --teal: #0f766e;
+            --cyan: #22d3ee;
+            --gold: #f59e0b;
+            --ink: #102033;
+            --muted: #64748b;
+            --line: #d8e1ec;
+            --paper: #ffffff;
+            --soft: #f5f9fd;
+        }
+        .stApp {
+            background:
+                radial-gradient(circle at 8% 4%, rgba(34, 211, 238, 0.18), transparent 30%),
+                radial-gradient(circle at 92% 12%, rgba(15, 118, 110, 0.16), transparent 28%),
+                linear-gradient(180deg, #eef7fb 0%, #f8fafc 48%, #eef4f8 100%);
+            color: var(--ink);
+        }
         .main .block-container {
-            padding-top: 2rem;
+            max-width: 1180px;
+            padding-top: 1.6rem;
             padding-bottom: 2rem;
         }
+        [data-testid="stSidebar"] {
+            background: linear-gradient(180deg, #062338 0%, #0b3a53 48%, #062338 100%);
+        }
+        [data-testid="stSidebar"] * {
+            color: #eaf6fb;
+        }
+        [data-testid="stSidebar"] [data-baseweb="select"] div {
+            color: #0f172a;
+        }
+        [data-testid="stSidebar"] h1,
+        [data-testid="stSidebar"] h2,
+        [data-testid="stSidebar"] h3 {
+            color: #ffffff;
+            letter-spacing: 0;
+        }
         .hero-box {
-            padding: 24px;
+            position: relative;
+            padding: 28px;
             border-radius: 8px;
-            background: linear-gradient(135deg, #0f3d5e, #047857);
+            background:
+                linear-gradient(120deg, rgba(8, 47, 73, 0.98), rgba(15, 110, 168, 0.93), rgba(15, 118, 110, 0.90)),
+                repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.10) 0, rgba(255, 255, 255, 0.10) 1px, transparent 1px, transparent 18px);
             color: white;
-            margin-bottom: 18px;
+            margin-bottom: 22px;
+            box-shadow: 0 24px 60px rgba(8, 47, 73, 0.25);
+            overflow: hidden;
+        }
+        .hero-box::after {
+            content: "";
+            position: absolute;
+            top: -70px;
+            right: -60px;
+            width: 240px;
+            height: 240px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.13);
         }
         .hero-box h1 {
             color: white;
             margin-bottom: 8px;
+            font-size: 2.45rem;
+            line-height: 1.08;
+            letter-spacing: 0;
         }
         .hero-box p {
             color: rgba(255,255,255,0.88);
             margin-bottom: 0;
+            max-width: 760px;
+            line-height: 1.55;
         }
         .info-box {
-            padding: 16px;
-            border: 1px solid #d7dee8;
+            padding: 18px;
+            border: 1px solid rgba(216, 225, 236, 0.92);
             border-radius: 8px;
-            background: #f8fafc;
+            background: rgba(255, 255, 255, 0.88);
+            box-shadow: 0 16px 38px rgba(15, 23, 42, 0.08);
+            backdrop-filter: blur(12px);
         }
         .small-muted {
-            color: #64748b;
+            color: var(--muted);
             font-size: 0.92rem;
+        }
+        h1, h2, h3 {
+            color: #0f2338;
+            letter-spacing: 0;
+        }
+        div[data-testid="stMetric"] {
+            padding: 16px 18px;
+            border: 1px solid rgba(216, 225, 236, 0.92);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.07);
+        }
+        div[data-testid="stMetric"] label {
+            color: var(--muted);
+            font-weight: 800;
+        }
+        div[data-testid="stDataFrame"] {
+            border: 1px solid rgba(216, 225, 236, 0.92);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+        }
+        div[data-testid="stForm"] {
+            padding: 18px;
+            border: 1px solid rgba(216, 225, 236, 0.92);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.88);
+            box-shadow: 0 16px 38px rgba(15, 23, 42, 0.07);
+        }
+        .stTextInput input,
+        .stNumberInput input,
+        div[data-baseweb="select"] > div {
+            border-radius: 8px !important;
+            border-color: #cbd5e1 !important;
+            background-color: #fbfdff !important;
+            transition: box-shadow 160ms ease, border-color 160ms ease, background-color 160ms ease;
+        }
+        .stTextInput input:focus,
+        .stNumberInput input:focus {
+            border-color: var(--teal) !important;
+            box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.13) !important;
+            background-color: #ffffff !important;
+        }
+        div.stButton > button,
+        div[data-testid="stFormSubmitButton"] button {
+            position: relative;
+            min-height: 44px;
+            border: 0;
+            border-radius: 8px;
+            color: #ffffff;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--navy), var(--blue) 55%, var(--teal));
+            box-shadow: 0 14px 28px rgba(15, 110, 168, 0.24);
+            transition: transform 170ms ease, box-shadow 170ms ease, filter 170ms ease;
+            overflow: hidden;
+        }
+        div.stButton > button::before,
+        div[data-testid="stFormSubmitButton"] button::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            transform: translateX(-120%);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+            transition: transform 520ms ease;
+        }
+        div.stButton > button:hover,
+        div[data-testid="stFormSubmitButton"] button:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+            filter: saturate(1.08);
+            box-shadow: 0 18px 34px rgba(15, 110, 168, 0.31);
+        }
+        div.stButton > button:hover::before,
+        div[data-testid="stFormSubmitButton"] button:hover::before {
+            transform: translateX(120%);
+        }
+        div.stButton > button:active,
+        div[data-testid="stFormSubmitButton"] button:active {
+            transform: translateY(0);
+        }
+        div[data-testid="stTabs"] button {
+            border-radius: 8px 8px 0 0;
+            font-weight: 800;
+        }
+        .stAlert {
+            border-radius: 8px;
         }
     </style>
     """,
