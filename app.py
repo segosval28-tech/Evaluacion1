@@ -84,8 +84,23 @@ st.markdown(
         [data-testid="stSidebar"] * {
             color: #eaf6fb;
         }
-        [data-testid="stSidebar"] [data-baseweb="select"] div {
-            color: #0f172a;
+        [data-testid="stSidebar"] div[data-baseweb="select"] > div {
+            min-height: 40px;
+            border: 1px solid rgba(34, 211, 238, 0.38) !important;
+            border-radius: 8px !important;
+            background: #ffffff !important;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+        }
+        [data-testid="stSidebar"] div[data-baseweb="select"] span,
+        [data-testid="stSidebar"] div[data-baseweb="select"] input,
+        [data-testid="stSidebar"] div[data-baseweb="select"] div {
+            color: #0f172a !important;
+            opacity: 1 !important;
+            font-weight: 700;
+        }
+        [data-testid="stSidebar"] div[data-baseweb="select"] svg {
+            color: #0f766e !important;
+            fill: #0f766e !important;
         }
         [data-testid="stSidebar"] h1,
         [data-testid="stSidebar"] h2,
