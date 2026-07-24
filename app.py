@@ -94,6 +94,7 @@ st.markdown(
         [data-testid="stSidebar"] div[data-baseweb="select"] * {
             color: #0f172a !important;
             -webkit-text-fill-color: #0f172a !important;
+            caret-color: #0f172a !important;
             text-shadow: none !important;
             opacity: 1 !important;
         }
@@ -107,6 +108,19 @@ st.markdown(
             -webkit-text-fill-color: #0f172a !important;
             opacity: 1 !important;
             font-weight: 700;
+        }
+        [data-testid="stSidebar"] div[data-baseweb="select"] input {
+            color: #000000 !important;
+            -webkit-text-fill-color: #000000 !important;
+            caret-color: #000000 !important;
+            font-weight: 800 !important;
+        }
+        [data-testid="stSidebar"] div[data-baseweb="select"] [aria-selected="true"],
+        [data-testid="stSidebar"] div[data-baseweb="select"] [role="option"],
+        [data-testid="stSidebar"] div[data-baseweb="select"] [role="combobox"] {
+            color: #000000 !important;
+            -webkit-text-fill-color: #000000 !important;
+            background-color: transparent !important;
         }
         [data-testid="stSidebar"] div[data-baseweb="select"] svg {
             color: #0f766e !important;
