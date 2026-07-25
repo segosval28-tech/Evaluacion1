@@ -393,7 +393,7 @@ def ejercicio_1():
                  "Póliza de seguro de carga",
                  "Drawback",
                  "Otros"
-            ]
+             ]
         tipo = col2.selectbox("Tipo de movimiento", ["Ingreso", "Gasto"])
         categoria = col3.selectbox(
             "Categoria",
