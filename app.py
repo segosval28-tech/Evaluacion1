@@ -376,7 +376,7 @@ def ejercicio_1():
     with st.form("form_movimiento", clear_on_submit=True):
         col1, col2, col3 = st.columns([1.4, 1, 1])
         concepto = col1.selectbox(
-             <h3 id="formTitle">Concepto del movimiento</h3>,
+             "Concepto del movimiento",
              [
                  "Cobro de factura comercial",
                  "Adelanto de cliente extranjero",
