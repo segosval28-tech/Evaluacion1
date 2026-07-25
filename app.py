@@ -94,11 +94,8 @@ st.markdown(
             box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
         }
 
-        /* Fuerza color oscuro para todo el texto dentro del selectbox */
-        [data-testid="stSidebar"] div[data-baseweb="select"] div,
-        [data-testid="stSidebar"] div[data-baseweb="select"] span,
-        [data-testid="stSidebar"] div[data-baseweb="select"] input,
-        [data-testid="stSidebar"] div[data-baseweb="select"] p {
+        /* Fuerza color oscuro para todo el texto dentro del selectbox usando un comodín de mayor especificidad */
+        [data-testid="stSidebar"] div[data-baseweb="select"] * {
             color: #0f172a !important;
             -webkit-text-fill-color: #0f172a !important;
             opacity: 1 !important;
