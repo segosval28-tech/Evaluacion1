@@ -394,6 +394,7 @@ def ejercicio_1():
                  "Drawback",
                  "Otros"
              ]
+        )
         tipo = col2.selectbox("Tipo de movimiento", ["Ingreso", "Gasto"])
         categoria = col3.selectbox(
             "Categoria",
