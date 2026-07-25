@@ -78,11 +78,16 @@ st.markdown(
             padding-top: 1.6rem;
             padding-bottom: 2rem;
         }
+        
+        /* --- ESTILOS DEL SIDEBAR --- */
         [data-testid="stSidebar"] {
             background: linear-gradient(180deg, #062338 0%, #0b3a53 48%, #062338 100%);
         }
-        [data-testid="stSidebar"] * {
-            color: #eaf6fb;
+        
+        /* En lugar del comodin (*), apuntamos solo a los textos para no romper los inputs */
+        [data-testid="stSidebar"] p,
+        [data-testid="stSidebar"] label {
+            color: #eaf6fb !important;
         }
 
         /* --- CORRECCIÓN DEL SELECTBOX EN LA SIDEBAR --- */
@@ -94,12 +99,20 @@ st.markdown(
             box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
         }
 
-        /* Fuerza color oscuro para todo el texto dentro del selectbox usando un comodín de mayor especificidad */
-        [data-testid="stSidebar"] div[data-baseweb="select"] * {
+        /* Al especificar la etiqueta 'p' y 'span' ganamos la jerarquia en CSS para forzar el color oscuro */
+        [data-testid="stSidebar"] div[data-baseweb="select"] p,
+        [data-testid="stSidebar"] div[data-baseweb="select"] span,
+        [data-testid="stSidebar"] div[data-baseweb="select"] div {
             color: #0f172a !important;
             -webkit-text-fill-color: #0f172a !important;
             opacity: 1 !important;
             font-weight: 700 !important;
+        }
+        
+        /* Asegurar que el input de texto del sidebar tambien sea oscuro */
+        [data-testid="stSidebar"] input {
+            color: #0f172a !important;
+            -webkit-text-fill-color: #0f172a !important;
         }
 
         /* Flecha del menú desplegable */
