@@ -84,48 +84,34 @@ st.markdown(
         [data-testid="stSidebar"] * {
             color: #eaf6fb;
         }
+
+        /* --- CORRECCIÓN DEL SELECTBOX EN LA SIDEBAR --- */
         [data-testid="stSidebar"] div[data-baseweb="select"] > div {
             min-height: 40px;
             border: 1px solid rgba(34, 211, 238, 0.38) !important;
             border-radius: 8px !important;
-            background: #ffffff !important;
+            background-color: #ffffff !important;
             box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
         }
-        [data-testid="stSidebar"] div[data-baseweb="select"] * {
-            color: #0f172a !important;
-            -webkit-text-fill-color: #0f172a !important;
-            caret-color: #0f172a !important;
-            text-shadow: none !important;
-            opacity: 1 !important;
-        }
+
+        /* Fuerza color oscuro para todo el texto dentro del selectbox */
+        [data-testid="stSidebar"] div[data-baseweb="select"] div,
         [data-testid="stSidebar"] div[data-baseweb="select"] span,
-        [data-testid="stSidebar"] div[data-baseweb="select"] p,
         [data-testid="stSidebar"] div[data-baseweb="select"] input,
-        [data-testid="stSidebar"] div[data-baseweb="select"] [role="combobox"],
-        [data-testid="stSidebar"] div[data-baseweb="select"] [data-testid="stMarkdownContainer"],
-        [data-testid="stSidebar"] div[data-baseweb="select"] div {
+        [data-testid="stSidebar"] div[data-baseweb="select"] p {
             color: #0f172a !important;
             -webkit-text-fill-color: #0f172a !important;
             opacity: 1 !important;
-            font-weight: 700;
+            font-weight: 700 !important;
         }
-        [data-testid="stSidebar"] div[data-baseweb="select"] input {
-            color: #000000 !important;
-            -webkit-text-fill-color: #000000 !important;
-            caret-color: #000000 !important;
-            font-weight: 800 !important;
-        }
-        [data-testid="stSidebar"] div[data-baseweb="select"] [aria-selected="true"],
-        [data-testid="stSidebar"] div[data-baseweb="select"] [role="option"],
-        [data-testid="stSidebar"] div[data-baseweb="select"] [role="combobox"] {
-            color: #000000 !important;
-            -webkit-text-fill-color: #000000 !important;
-            background-color: transparent !important;
-        }
+
+        /* Flecha del menú desplegable */
         [data-testid="stSidebar"] div[data-baseweb="select"] svg {
-            color: #0f766e !important;
             fill: #0f766e !important;
+            color: #0f766e !important;
         }
+        /* ---------------------------------------------- */
+
         [data-testid="stSidebar"] h1,
         [data-testid="stSidebar"] h2,
         [data-testid="stSidebar"] h3 {
@@ -231,8 +217,7 @@ st.markdown(
             box-shadow: 0 16px 38px rgba(15, 23, 42, 0.07);
         }
         .stTextInput input,
-        .stNumberInput input,
-        div[data-baseweb="select"] > div {
+        .stNumberInput input {
             border-radius: 8px !important;
             border-color: #cbd5e1 !important;
             background-color: #fbfdff !important;
@@ -257,15 +242,6 @@ st.markdown(
             transition: transform 170ms ease, box-shadow 170ms ease, filter 170ms ease;
             overflow: hidden;
         }
-        div.stButton > button::before,
-        div[data-testid="stFormSubmitButton"] button::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            transform: translateX(-120%);
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
-            transition: transform 520ms ease;
-        }
         div.stButton > button:hover,
         div[data-testid="stFormSubmitButton"] button:hover {
             color: #ffffff;
@@ -273,37 +249,12 @@ st.markdown(
             filter: saturate(1.08);
             box-shadow: 0 18px 34px rgba(15, 110, 168, 0.31);
         }
-        div.stButton > button:hover::before,
-        div[data-testid="stFormSubmitButton"] button:hover::before {
-            transform: translateX(120%);
-        }
-        div.stButton > button:active,
-        div[data-testid="stFormSubmitButton"] button:active {
-            transform: translateY(0);
-        }
         div[data-testid="stTabs"] button {
             border-radius: 8px 8px 0 0;
             font-weight: 800;
         }
         .stAlert {
             border-radius: 8px;
-        }
-        /* Selectbox completo */
-        [data-testid="stSidebar"] div[data-baseweb="select"] * {
-        color: #000000 !important;
-        fill: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        opacity: 1 !important;
-        }
-
-        /* Valor seleccionado */
-        [data-testid="stSidebar"] div[data-baseweb="select"] > div > div {
-        color: #000000 !important;
-        }
-
-        /* Placeholder */
-        [data-testid="stSidebar"] div[data-baseweb="select"] input::placeholder {
-        color: #000000 !important;
         }
     </style>
     """,
