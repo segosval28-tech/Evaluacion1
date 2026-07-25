@@ -375,7 +375,25 @@ def ejercicio_1():
 
     with st.form("form_movimiento", clear_on_submit=True):
         col1, col2, col3 = st.columns([1.4, 1, 1])
-        concepto = col1.text_input("Concepto del movimiento", placeholder="Ej. Flete internacional")
+        concepto = col1.selectbox(
+             "Concepto del movimiento",
+             [
+                 "Cobro de factura comercial",
+                 "Adelanto de cliente extranjero",
+                 "Trámite de DAM",
+                 "Comisión de agencia de aduanas",
+                 "Pagos por Vistos Buenos (VoBo)",
+                 "Emisión de BL / AWB",
+                 "Flete interno",
+                 "Servicios de almacenaje",
+                 "Movilización de contenedor",
+                 "Pesaje y transmisión VGM",
+                 "Flete marítimo internacional",
+                 "Flete aéreo internacional",
+                 "Póliza de seguro de carga",
+                 "Drawback",
+                 "Otros"
+            ]
         tipo = col2.selectbox("Tipo de movimiento", ["Ingreso", "Gasto"])
         categoria = col3.selectbox(
             "Categoria",
