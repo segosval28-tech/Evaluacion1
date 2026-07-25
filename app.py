@@ -288,6 +288,23 @@ st.markdown(
         .stAlert {
             border-radius: 8px;
         }
+        /* Selectbox completo */
+        [data-testid="stSidebar"] div[data-baseweb="select"] * {
+        color: #000000 !important;
+        fill: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        opacity: 1 !important;
+        }
+
+        /* Valor seleccionado */
+        [data-testid="stSidebar"] div[data-baseweb="select"] > div > div {
+        color: #000000 !important;
+        }
+
+        /* Placeholder */
+        [data-testid="stSidebar"] div[data-baseweb="select"] input::placeholder {
+        color: #000000 !important;
+        }
     </style>
     """,
     unsafe_allow_html=True,
