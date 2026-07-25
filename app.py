@@ -54,6 +54,15 @@ st.set_page_config(
 st.markdown(
     """
     <style>
+        /* Pone en negrita todas las etiquetas de los inputs y selectboxes dentro de los formularios */
+         div[data-testid="stForm"] label p,
+        .stTextInput label p,
+        .stSelectbox label p,
+        .stNumberInput label p {
+            font-weight: 700 !important;
+            font-size: 0.95rem !important;
+            color: #0f2338 !important;
+        }
         :root {
             --navy: #082f49;
             --blue: #0f6ea8;
