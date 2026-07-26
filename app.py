@@ -120,8 +120,10 @@ st.markdown(
 
         [data-testid="stSidebar"] h1,
         [data-testid="stSidebar"] h2,
-        [data-testid="stSidebar"] h3 {
-            color: #ffffff;
+        [data-testid="stSidebar"] h3 
+        [data-testid="stSidebar"] label p {
+            color: #ffffff; !important;
+            font-weigth: 700 !important;
             letter-spacing: 0;
         }
         .hero-box {
