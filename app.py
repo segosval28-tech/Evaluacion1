@@ -517,7 +517,7 @@ def ejercicio_2():
 
         df = pd.DataFrame(
             {
-                "Producto": productos,
+                "Estilo de prenda": productos,
                 "Cliente": clientes,
                 "Pais destino": paises,
                 "Via": vias,
