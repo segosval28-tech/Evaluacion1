@@ -471,8 +471,8 @@ def ejercicio_2():
 
     with st.form("form_embarque", clear_on_submit=True):
         col1, col2, col3 = st.columns(3)
-        producto = col1.text_input("Producto", placeholder="Ej. Prendas de vestir")
-        cliente = col2.text_input("Cliente extranjero", placeholder="Ej. Cliente USA")
+        producto = col1.text_input("Estilo de prenda", placeholder="Ej. Prendas de vestir")
+        cliente = col2.text_input("Cliente", placeholder="Ej. Cliente USA")
         pais = col3.text_input("Pais destino", placeholder="Ej. Estados Unidos")
 
         col4, col5, col6 = st.columns(3)
@@ -485,14 +485,14 @@ def ejercicio_2():
 
     if agregar:
         if not producto.strip() or not cliente.strip() or not pais.strip():
-            st.error("Complete producto, cliente y pais destino.")
+            st.error("Complete estilo de prenda, cliente y pais destino.")
         elif precio <= 0:
             st.error("El precio unitario debe ser mayor que cero.")
         else:
             total = cantidad * precio
             st.session_state.embarques_exportacion.append(
                 {
-                    "Producto": producto.strip(),
+                    "Estilo de prenda": producto.strip(),
                     "Cliente": cliente.strip(),
                     "Pais destino": pais.strip(),
                     "Via": via,
