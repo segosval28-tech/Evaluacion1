@@ -366,10 +366,10 @@ def pagina_home():
             """
             <div class="info-box">
                 <h3>Datos generales</h3>
-                <p><strong>Estudiante:</strong> Escribe aqui tu nombre completo</p>
+                <p><strong>Estudiante:</strong> Oswaldo Pasache Raymundo</p>
                 <p><strong>Modulo:</strong> Python Fundamentals</p>
                 <p><strong>Curso:</strong> Python for Analytics</p>
-                <p><strong>Anio:</strong> 2026</p>
+                <p><strong>Año:</strong> 2026</p>
                 <p><strong>Perfil:</strong> Gestion logistica de exportaciones</p>
             </div>
             """,
