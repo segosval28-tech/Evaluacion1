@@ -54,15 +54,6 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-        /* Pone en negrita todas las etiquetas de los inputs y selectboxes dentro de los formularios */
-         div[data-testid="stForm"] label p,
-        .stTextInput label p,
-        .stSelectbox label p,
-        .stNumberInput label p {
-            font-weight: 700 !important;
-            font-size: 0.95rem !important;
-            color: #0f2338 !important;
-        }
         :root {
             --navy: #082f49;
             --blue: #0f6ea8;
@@ -93,7 +84,6 @@ st.markdown(
             background: linear-gradient(180deg, #062338 0%, #0b3a53 48%, #062338 100%);
         }
         
-        /* En lugar del comodin (*), apuntamos solo a los textos para no romper los inputs */
         [data-testid="stSidebar"] p,
         [data-testid="stSidebar"] label {
             color: #eaf6fb !important;
@@ -108,7 +98,6 @@ st.markdown(
             box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
         }
 
-        /* Al especificar la etiqueta 'p' y 'span' ganamos la jerarquia en CSS para forzar el color oscuro */
         [data-testid="stSidebar"] div[data-baseweb="select"] p,
         [data-testid="stSidebar"] div[data-baseweb="select"] span,
         [data-testid="stSidebar"] div[data-baseweb="select"] div {
@@ -118,18 +107,16 @@ st.markdown(
             font-weight: 700 !important;
         }
         
-        /* Asegurar que el input de texto del sidebar tambien sea oscuro */
         [data-testid="stSidebar"] input {
             color: #0f172a !important;
             -webkit-text-fill-color: #0f172a !important;
         }
 
-        /* Flecha del menú desplegable */
         [data-testid="stSidebar"] div[data-baseweb="select"] svg {
             fill: #0f766e !important;
             color: #0f766e !important;
         }
-        /* ---------------------------------------------- */
+        ----------------------------------------------
 
         [data-testid="stSidebar"] h1,
         [data-testid="stSidebar"] h2,
@@ -179,10 +166,6 @@ st.markdown(
             background: rgba(255, 255, 255, 0.88);
             box-shadow: 0 16px 38px rgba(15, 23, 42, 0.08);
             backdrop-filter: blur(12px);
-        }
-        .small-muted {
-            color: var(--muted);
-            font-size: 0.92rem;
         }
         .active-section-box {
             margin-top: 12px;
@@ -275,6 +258,15 @@ st.markdown(
         .stAlert {
             border-radius: 8px;
         }
+        /* Etiquetas de formularios en negrita */
+        div[data-testid="stForm"] label p,
+        .stTextInput label p,
+        .stSelectbox label p,
+        .stNumberInput label p {
+            font-weight: 700 !important;
+            font-size: 0.95rem !important;
+            color: #0f2338 !important;
+        }
     </style>
     """,
     unsafe_allow_html=True,
@@ -351,10 +343,10 @@ def pagina_home():
             """
             <div class="info-box">
                 <h3>Datos generales</h3>
-                <p><strong>Estudiante:</strong> Oswaldo Pasache Raymundo</p>
+                <p><strong>Estudiante:</strong> Escribe aqui tu nombre completo</p>
                 <p><strong>Modulo:</strong> Python Fundamentals</p>
                 <p><strong>Curso:</strong> Python for Analytics</p>
-                <p><strong>Año:</strong> 2026</p>
+                <p><strong>Anio:</strong> 2026</p>
                 <p><strong>Perfil:</strong> Gestion logistica de exportaciones</p>
             </div>
             """,
@@ -385,24 +377,24 @@ def ejercicio_1():
     with st.form("form_movimiento", clear_on_submit=True):
         col1, col2, col3 = st.columns([1.4, 1, 1])
         concepto = col1.selectbox(
-             "Concepto del movimiento",
-             [
-                 "Cobro de factura comercial",
-                 "Adelanto de cliente extranjero",
-                 "Trámite de DAM",
-                 "Comisión de agencia de aduanas",
-                 "Pagos por Vistos Buenos (VoBo)",
-                 "Emisión de BL / AWB",
-                 "Flete interno",
-                 "Servicios de almacenaje",
-                 "Movilización de contenedor",
-                 "Pesaje y transmisión VGM",
-                 "Flete marítimo internacional",
-                 "Flete aéreo internacional",
-                 "Póliza de seguro de carga",
-                 "Drawback",
-                 "Otros"
-             ]
+            "Concepto del movimiento",
+            [
+                "Cobro de factura comercial",
+                "Adelanto de cliente extranjero",
+                "Trámite de DAM",
+                "Comisión de agencia de aduanas",
+                "Pagos por Vistos Buenos (VoBo)",
+                "Emisión de BL / AWB",
+                "Flete interno",
+                "Servicios de almacenaje",
+                "Movilización de contenedor",
+                "Pesaje y transmisión VGM",
+                "Flete marítimo internacional",
+                "Flete aéreo internacional",
+                "Póliza de seguro de carga",
+                "Drawback",
+                "Otros",
+            ],
         )
         tipo = col2.selectbox("Tipo de movimiento", ["Ingreso", "Gasto"])
         categoria = col3.selectbox(
@@ -421,14 +413,12 @@ def ejercicio_1():
         agregar = st.form_submit_button("Agregar movimiento")
 
     if agregar:
-        if not concepto.strip():
-            st.error("Ingrese un concepto para registrar el movimiento.")
-        elif valor <= 0:
+        if valor <= 0:
             st.error("El valor debe ser mayor que cero.")
         else:
             st.session_state.movimientos_exportacion.append(
                 {
-                    "Concepto": concepto.strip(),
+                    "Concepto": concepto,
                     "Tipo": tipo,
                     "Categoria": categoria,
                     "Valor USD": round(valor, 2),
@@ -471,9 +461,47 @@ def ejercicio_2():
 
     with st.form("form_embarque", clear_on_submit=True):
         col1, col2, col3 = st.columns(3)
-        producto = col1.text_input("Estilo de prenda", placeholder="Ej. Prendas de vestir")
-        cliente = col2.text_input("Cliente", placeholder="Ej. Cliente USA")
-        pais = col3.text_input("Pais destino", placeholder="Ej. Estados Unidos")
+        
+        producto = col1.selectbox(
+            "Estilo de prenda",
+            [
+                "Camisas",
+                "Tank",
+                "T-Shirt Manga corta",
+                "T-Shirt Manga larga",
+                "T-shirt con estampado",
+                "T-shirt con bordado",
+                "T-shirt sublimado",
+                "Short",
+            ],
+        )
+        cliente = col2.selectbox(
+            "Cliente",
+            [
+                "Lacoste",
+                "Lululemon",
+                "Theory",
+                "Banana Republic",
+                "Skechers",
+                "Allbirs",
+            ],
+        )
+        pais = col3.selectbox(
+            "Pais destino",
+            [
+                "USA",
+                "Canadá",
+                "China",
+                "Netherlands",
+                "Singapore",
+                "Reino Unido",
+                "Mexico",
+                "Argentina",
+                "Brasil",
+                "Vietnan",
+                "Australia",
+            ],
+        )
 
         col4, col5, col6 = st.columns(3)
         via = col4.selectbox("Via de transporte", ["Maritimo", "Aereo"])
@@ -484,17 +512,15 @@ def ejercicio_2():
         agregar = st.form_submit_button("Agregar embarque")
 
     if agregar:
-        if not producto.strip() or not cliente.strip() or not pais.strip():
-            st.error("Complete estilo de prenda, cliente y pais destino.")
-        elif precio <= 0:
+        if precio <= 0:
             st.error("El precio unitario debe ser mayor que cero.")
         else:
             total = cantidad * precio
             st.session_state.embarques_exportacion.append(
                 {
-                    "Estilo de prenda": producto.strip(),
-                    "Cliente": cliente.strip(),
-                    "Pais destino": pais.strip(),
+                    "Producto": producto,
+                    "Cliente": cliente,
+                    "Pais destino": pais,
                     "Via": via,
                     "Incoterm": incoterm,
                     "Cantidad": cantidad,
@@ -506,7 +532,7 @@ def ejercicio_2():
 
     registros = st.session_state.embarques_exportacion
     if registros:
-        productos = np.array([r["Estilo de prenda"] for r in registros])
+        productos = np.array([r["Producto"] for r in registros])
         clientes = np.array([r["Cliente"] for r in registros])
         paises = np.array([r["Pais destino"] for r in registros])
         vias = np.array([r["Via"] for r in registros])
@@ -517,7 +543,7 @@ def ejercicio_2():
 
         df = pd.DataFrame(
             {
-                "Estilo de prenda": productos,
+                "Producto": productos,
                 "Cliente": clientes,
                 "Pais destino": paises,
                 "Via": vias,
@@ -724,7 +750,9 @@ def ejercicio_4():
 
 def main():
     inicializar_estado()
-   
+    st.sidebar.write("Texto de prueba")
+    st.sidebar.text_input("Prueba", "Hola")
+
     st.sidebar.title("Menu del proyecto")
     seccion = st.sidebar.selectbox(
         "Seleccione una seccion",
