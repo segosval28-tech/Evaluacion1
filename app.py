@@ -686,44 +686,45 @@ def ejercicio_4():
         val_stock = int(prod_actual["Stock actual"])
         val_stock_min = int(prod_actual["Stock minimo"])
 
-        # Definimos la lista de opciones basándonos en el Ejercicio 2
-        lista_prendas = [
-            "Camisas",
-            "Tank",
-            "T-Shirt Manga corta",
-            "T-Shirt Manga larga",
-            "T-shirt con estampado",
-            "T-shirt con bordado",
-            "T-shirt sublimado",
-            "Short",
-        ]
-        
-        # Calculamos el índice para que al "Modificar" se seleccione automáticamente el valor correcto
-        index_prenda = lista_prendas.index(val_nombre) if val_nombre in lista_prendas else 0
+    # Definimos la lista de opciones basándonos en el Ejercicio 2
+    lista_prendas = [
+        "Camisas",
+        "Tank",
+        "T-Shirt Manga corta",
+        "T-Shirt Manga larga",
+        "T-shirt con estampado",
+        "T-shirt con bordado",
+        "T-shirt sublimado",
+        "Short",
+    ]
     
-        # Utilizamos un formulario para el ingreso de datos
-        with st.form("form_crud_producto", clear_on_submit=False):
-            col1, col2 = st.columns(2)
-            # El código se deshabilita si estamos editando para mantener la integridad
-            codigo = col1.text_input("Codigo", value=val_codigo, disabled=bool(editando_codigo), placeholder="Ej. PROD001")
-            # Cambiamos el text_input por selectbox y le asignamos el nombre "Estilo de prenda"
-            nombre = col2.selectbox("Estilo de prenda", lista_prendas, index=index_prenda)
-            
-            col3, col4 = st.columns(2)
-            costo = col3.number_input("Costo unitario USD", min_value=0.0, step=1.0, value=val_costo)
-            precio = col4.number_input("Precio exportacion USD", min_value=0.0, step=1.0, value=val_precio)
-            
-            col5, col6 = st.columns(2)
-            stock_actual = col5.number_input("Stock actual", min_value=0, step=1, value=val_stock)
-            stock_minimo = col6.number_input("Stock minimo", min_value=0, step=1, value=val_stock_min)
-            
-            # El botón cambia su texto según el contexto
-            label_boton = "Actualizar producto" if editando_codigo else "Crear producto"
-            guardar = st.form_submit_button(label_boton)
+    # Calculamos el índice para que al "Modificar" se seleccione automáticamente el valor correcto
+    index_prenda = lista_prendas.index(val_nombre) if val_nombre in lista_prendas else 0
 
-      if guardar:
-        if not codigo.strip() or not nombre.strip():
-            st.error("Ingrese código y nombre del producto.")
+    # Utilizamos un formulario para el ingreso de datos
+    with st.form("form_crud_producto", clear_on_submit=False):
+        col1, col2 = st.columns(2)
+        # El código se deshabilita si estamos editando para mantener la integridad
+        codigo = col1.text_input("Codigo", value=val_codigo, disabled=bool(editando_codigo), placeholder="Ej. PROD001")
+        
+        # Cambiamos el text_input por selectbox y le asignamos el nombre "Estilo de prenda"
+        nombre = col2.selectbox("Estilo de prenda", lista_prendas, index=index_prenda)
+        
+        col3, col4 = st.columns(2)
+        costo = col3.number_input("Costo unitario USD", min_value=0.0, step=1.0, value=val_costo)
+        precio = col4.number_input("Precio exportacion USD", min_value=0.0, step=1.0, value=val_precio)
+        
+        col5, col6 = st.columns(2)
+        stock_actual = col5.number_input("Stock actual", min_value=0, step=1, value=val_stock)
+        stock_minimo = col6.number_input("Stock minimo", min_value=0, step=1, value=val_stock_min)
+        
+        # El botón cambia su texto según el contexto
+        label_boton = "Actualizar producto" if editando_codigo else "Crear producto"
+        guardar = st.form_submit_button(label_boton)
+
+    if guardar:
+        if not codigo.strip():
+            st.error("Ingrese el código del producto.")
         else:
             codigo_limpio = codigo.strip().upper()
             try:
