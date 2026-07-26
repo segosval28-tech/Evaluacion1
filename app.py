@@ -708,18 +708,20 @@ def ejercicio_4():
             codigo = col1.text_input("Codigo", value=val_codigo, disabled=bool(editando_codigo), placeholder="Ej. PROD001")
             # Cambiamos el text_input por selectbox y le asignamos el nombre "Estilo de prenda"
             nombre = col2.selectbox("Estilo de prenda", lista_prendas, index=index_prenda)
-        
-        col3, col4 = st.columns(2)
-        costo = col3.number_input("Costo unitario USD", min_value=0.0, step=1.0, value=val_costo)
-        precio = col4.number_input("Precio exportacion USD", min_value=0.0, step=1.0, value=val_precio)
-        
-        col5, col6 = st.columns(2)
-        stock_actual = col5.number_input("Stock actual", min_value=0, step=1, value=val_stock)
-        stock_minimo = col6.number_input("Stock minimo", min_value=0, step=1, value=val_stock_min)
-        
-        # El botón cambia su texto según el contexto
-        label_boton = "Actualizar producto" if editando_codigo else "Crear producto"
-        guardar = st.form_submit_button(label_boton)
+            
+            col3, col4 = st.columns(2)
+            costo = col3.number_input("Costo unitario USD", min_value=0.0, step=1.0, value=val_costo)
+            precio = col4.number_input("Precio exportacion USD", min_value=0.0, step=1.0, value=val_precio)
+            
+            col5, col6 = st.columns(2)
+            stock_actual = col5.number_input("Stock actual", min_value=0, step=1, value=val_stock)
+            stock_minimo = col6.number_input("Stock minimo", min_value=0, step=1, value=val_stock_min)
+            
+            # El botón cambia su texto según el contexto
+            label_boton = "Actualizar producto" if editando_codigo else "Crear producto"
+            guardar = st.form_submit_button(label_boton)
+
+    if guardar:
 
     if guardar:
         if not codigo.strip() or not nombre.strip():
