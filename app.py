@@ -506,7 +506,7 @@ def ejercicio_2():
 
     registros = st.session_state.embarques_exportacion
     if registros:
-        productos = np.array([r["Producto"] for r in registros])
+        productos = np.array([r["Estilo de prenda"] for r in registros])
         clientes = np.array([r["Cliente"] for r in registros])
         paises = np.array([r["Pais destino"] for r in registros])
         vias = np.array([r["Via"] for r in registros])
