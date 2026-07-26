@@ -301,6 +301,7 @@ def inicializar_estado():
         "embarques_exportacion": [],
         "historico_margen": [],
         "productos_exportacion": [],
+        "editando_codigo": None,  # Variable de estado para controlar la edición en el CRUD
     }
     for clave, valor in valores_iniciales.items():
         if clave not in st.session_state:
@@ -652,121 +653,133 @@ def ejercicio_3():
 
 
 def ejercicio_4():
-    st.title("Ejercicio 4 - Clase externa con CRUD")
+    st.title("Ejercicio 4 - Clase externa con CRUD Unificado")
     st.markdown(
-        "Uso de la clase `InventarioProducto` desde `libreria_clases_proyecto1.py` "
-        "para administrar productos disponibles para exportacion."
+        "Interfaz consolidada para administrar productos disponibles para exportación. "
+        "Utiliza la clase `InventarioProducto` desde `libreria_clases_proyecto1.py`."
     )
 
-    tab_crear, tab_leer, tab_actualizar, tab_eliminar = st.tabs(
-        ["Crear", "Leer", "Actualizar", "Eliminar"]
-    )
+    productos = st.session_state.productos_exportacion
+    codigos = [p["Codigo"] for p in productos]
+    
+    # Determinar si estamos en modo edición
+    editando_codigo = st.session_state.get("editando_codigo")
+    
+    # --- FORMULARIO DE REGISTRO / ACTUALIZACIÓN ---
+    st.subheader("Registrar / Modificar Producto")
+    
+    # Variables por defecto
+    val_codigo = ""
+    val_nombre = ""
+    val_costo = 0.0
+    val_precio = 0.0
+    val_stock = 0
+    val_stock_min = 0
+    
+    # Si estamos editando, cargar la información del producto
+    if editando_codigo and editando_codigo in codigos:
+        prod_actual = next(p for p in productos if p["Codigo"] == editando_codigo)
+        val_codigo = prod_actual["Codigo"]
+        val_nombre = prod_actual["Producto"]
+        val_costo = float(prod_actual["Costo unitario USD"])
+        val_precio = float(prod_actual["Precio exportacion USD"])
+        val_stock = int(prod_actual["Stock actual"])
+        val_stock_min = int(prod_actual["Stock minimo"])
 
-    with tab_crear:
-        with st.form("form_crear_producto", clear_on_submit=True):
-            col1, col2 = st.columns(2)
-            codigo = col1.text_input("Codigo", placeholder="Ej. PROD001")
-            nombre = col2.text_input("Producto", placeholder="Ej. Polo algodon")
-            col3, col4 = st.columns(2)
-            costo = col3.number_input("Costo unitario USD", min_value=0.0, step=1.0, key="crear_costo")
-            precio = col4.number_input("Precio exportacion USD", min_value=0.0, step=1.0, key="crear_precio")
-            col5, col6 = st.columns(2)
-            stock_actual = col5.number_input("Stock actual", min_value=0, step=1, key="crear_stock")
-            stock_minimo = col6.number_input("Stock minimo", min_value=0, step=1, key="crear_stock_min")
-            crear = st.form_submit_button("Crear producto")
+    # Utilizamos un formulario para el ingreso de datos
+    with st.form("form_crud_producto", clear_on_submit=False):
+        col1, col2 = st.columns(2)
+        # El código se deshabilita si estamos editando para mantener la integridad
+        codigo = col1.text_input("Codigo", value=val_codigo, disabled=bool(editando_codigo), placeholder="Ej. PROD001")
+        nombre = col2.text_input("Producto", value=val_nombre, placeholder="Ej. Polo algodon")
+        
+        col3, col4 = st.columns(2)
+        costo = col3.number_input("Costo unitario USD", min_value=0.0, step=1.0, value=val_costo)
+        precio = col4.number_input("Precio exportacion USD", min_value=0.0, step=1.0, value=val_precio)
+        
+        col5, col6 = st.columns(2)
+        stock_actual = col5.number_input("Stock actual", min_value=0, step=1, value=val_stock)
+        stock_minimo = col6.number_input("Stock minimo", min_value=0, step=1, value=val_stock_min)
+        
+        # El botón cambia su texto según el contexto
+        label_boton = "Actualizar producto" if editando_codigo else "Crear producto"
+        guardar = st.form_submit_button(label_boton)
 
-        if crear:
-            codigos = [p["Codigo"] for p in st.session_state.productos_exportacion]
-            if not codigo.strip() or not nombre.strip():
-                st.error("Ingrese codigo y nombre del producto.")
-            elif codigo.strip().upper() in codigos:
-                st.error("Ya existe un producto con ese codigo.")
-            else:
-                try:
-                    registro = crear_registro_producto(
-                        codigo, nombre, costo, precio, stock_actual, stock_minimo
-                    )
-                    st.session_state.productos_exportacion.append(registro)
-                    st.success("Producto creado correctamente.")
-                except ValueError as error:
-                    st.error(str(error))
-
-    with tab_leer:
-        mostrar_dataframe(
-            st.session_state.productos_exportacion,
-            "Aun no hay productos registrados.",
-        )
-
-    with tab_actualizar:
-        productos = st.session_state.productos_exportacion
-        if not productos:
-            st.info("Primero cree un producto para poder actualizarlo.")
+    if guardar:
+        if not codigo.strip() or not nombre.strip():
+            st.error("Ingrese código y nombre del producto.")
         else:
-            codigos = [p["Codigo"] for p in productos]
-            codigo_sel = st.selectbox("Seleccione producto", codigos, key="actualizar_codigo")
-            actual = next(p for p in productos if p["Codigo"] == codigo_sel)
-
-            with st.form("form_actualizar_producto"):
-                nombre = st.text_input("Producto", value=actual["Producto"])
-                col1, col2 = st.columns(2)
-                costo = col1.number_input(
-                    "Costo unitario USD",
-                    min_value=0.0,
-                    step=1.0,
-                    value=float(actual["Costo unitario USD"]),
-                    key="actualizar_costo",
+            codigo_limpio = codigo.strip().upper()
+            try:
+                # Se genera el nuevo registro usando la función que emplea la clase externa
+                nuevo_registro = crear_registro_producto(
+                    codigo_limpio, nombre, costo, precio, stock_actual, stock_minimo
                 )
-                precio = col2.number_input(
-                    "Precio exportacion USD",
-                    min_value=0.0,
-                    step=1.0,
-                    value=float(actual["Precio exportacion USD"]),
-                    key="actualizar_precio",
-                )
-                col3, col4 = st.columns(2)
-                stock_actual = col3.number_input(
-                    "Stock actual",
-                    min_value=0,
-                    step=1,
-                    value=int(actual["Stock actual"]),
-                    key="actualizar_stock",
-                )
-                stock_minimo = col4.number_input(
-                    "Stock minimo",
-                    min_value=0,
-                    step=1,
-                    value=int(actual["Stock minimo"]),
-                    key="actualizar_stock_min",
-                )
-                actualizar = st.form_submit_button("Actualizar producto")
-
-            if actualizar:
-                if not nombre.strip():
-                    st.error("El nombre del producto no puede quedar vacio.")
+                
+                if editando_codigo:
+                    # Actualizar registro existente
+                    indice = codigos.index(editando_codigo)
+                    st.session_state.productos_exportacion[indice] = nuevo_registro
+                    st.success("Producto actualizado correctamente.")
+                    st.session_state["editando_codigo"] = None  # Salir de modo edición
+                    st.rerun()
                 else:
-                    try:
-                        nuevo = crear_registro_producto(
-                            codigo_sel, nombre, costo, precio, stock_actual, stock_minimo
-                        )
-                        indice = codigos.index(codigo_sel)
-                        st.session_state.productos_exportacion[indice] = nuevo
-                        st.success("Producto actualizado correctamente.")
-                    except ValueError as error:
-                        st.error(str(error))
+                    # Crear registro nuevo
+                    if codigo_limpio in codigos:
+                        st.error("Ya existe un producto con ese código.")
+                    else:
+                        st.session_state.productos_exportacion.append(nuevo_registro)
+                        st.success("Producto creado correctamente.")
+                        st.rerun()
+            except ValueError as error:
+                st.error(str(error))
 
-    with tab_eliminar:
-        productos = st.session_state.productos_exportacion
-        if not productos:
-            st.info("No hay productos para eliminar.")
-        else:
-            codigos = [p["Codigo"] for p in productos]
-            codigo_sel = st.selectbox("Producto a eliminar", codigos, key="eliminar_codigo")
-            st.warning("Esta accion elimina el registro solo de la sesion actual.")
-            if st.button("Eliminar producto"):
+    # Botón para cancelar la edición por si el usuario cambia de opinión
+    if editando_codigo:
+        if st.button("❌ Cancelar edición"):
+            st.session_state["editando_codigo"] = None
+            st.rerun()
+
+    st.markdown("---")
+
+    # --- RESUMEN DE DATOS ---
+    st.subheader("Resumen de productos")
+    mostrar_dataframe(
+        st.session_state.productos_exportacion,
+        "Aun no hay productos registrados.",
+    )
+
+    # --- ACCIONES DE MODIFICACIÓN Y ELIMINACIÓN ---
+    if productos:
+        st.markdown("### Acciones")
+        # Estructuramos las columnas para alinear el selectbox y los botones
+        col_sel, col_btn1, col_btn2 = st.columns([2, 1, 1])
+        
+        codigo_accion = col_sel.selectbox(
+            "Seleccione un producto para modificar o eliminar:", 
+            codigos, 
+            key="accion_codigo"
+        )
+        
+        with col_btn1:
+            st.write("") # Espacios para alinear verticalmente con el selectbox
+            st.write("")
+            if st.button("✏️ Modificar", use_container_width=True):
+                st.session_state["editando_codigo"] = codigo_accion
+                st.rerun()
+                
+        with col_btn2:
+            st.write("")
+            st.write("")
+            if st.button("🗑️ Eliminar", use_container_width=True):
+                # Se filtra la lista para excluir el código seleccionado
                 st.session_state.productos_exportacion = [
-                    p for p in productos if p["Codigo"] != codigo_sel
+                    p for p in st.session_state.productos_exportacion if p["Codigo"] != codigo_accion
                 ]
-                st.success("Producto eliminado correctamente.")
+                # Si se elimina el producto que se estaba editando, se cancela la edición
+                if st.session_state.get("editando_codigo") == codigo_accion:
+                    st.session_state["editando_codigo"] = None
+                st.success(f"Producto {codigo_accion} eliminado correctamente.")
                 st.rerun()
 
 
