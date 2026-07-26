@@ -721,9 +721,7 @@ def ejercicio_4():
             label_boton = "Actualizar producto" if editando_codigo else "Crear producto"
             guardar = st.form_submit_button(label_boton)
 
-    if guardar:
-
-    if guardar:
+      if guardar:
         if not codigo.strip() or not nombre.strip():
             st.error("Ingrese código y nombre del producto.")
         else:
