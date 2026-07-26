@@ -707,8 +707,8 @@ def ejercicio_4():
         # El código se deshabilita si estamos editando para mantener la integridad
         codigo = col1.text_input("Codigo", value=val_codigo, disabled=bool(editando_codigo), placeholder="Ej. PROD001")
         
-        # Cambiamos el text_input por selectbox y le asignamos el nombre "Estilo de prenda"
-        nombre = col2.selectbox("Estilo de prenda", lista_prendas, index=index_prenda)
+        # Generamos un selectbox y le asignamos el nombre "Producto_Estilo"
+        nombre = col2.selectbox("Producto_Estilo", lista_prendas, index=index_prenda)
         
         col3, col4 = st.columns(2)
         costo = col3.number_input("Costo unitario USD", min_value=0.0, step=1.0, value=val_costo)
