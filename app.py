@@ -89,6 +89,26 @@ st.markdown(
             color: #eaf6fb !important;
         }
 
+        /* ===== Streamlit 1.59 ===== */
+
+        /* Texto del label */
+        [data-testid="stSidebar"] label,
+        [data-testid="stSidebar"] label *,
+        [data-testid="stSidebar"] .stSelectbox label,
+        [data-testid="stSidebar"] .stSelectbox label *,
+        [data-testid="stSidebar"] [data-testid="stWidgetLabel"],
+        [data-testid="stSidebar"] [data-testid="stWidgetLabel"] *{
+            color:#ffffff !important;
+            -webkit-text-fill-color:#ffffff !important;
+            font-weight:700 !important;
+        }
+        
+        /* Texto del valor seleccionado */
+        [data-testid="stSidebar"] div[data-baseweb="select"] [data-value]{
+            color:#0f172a !important;
+            -webkit-text-fill-color:#0f172a !important;
+        }
+
         /* --- CORRECCIÓN DEL SELECTBOX EN LA SIDEBAR --- */
         [data-testid="stSidebar"] div[data-baseweb="select"] > div {
             min-height: 40px;
