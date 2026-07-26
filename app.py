@@ -750,10 +750,7 @@ def ejercicio_4():
 
 def main():
     inicializar_estado()
-    st.sidebar.write("Texto de prueba")
-    st.sidebar.text_input("Prueba", "Hola")
-
-    st.sidebar.title("Menu del proyecto")
+       st.sidebar.title("Menu del proyecto")
     seccion = st.sidebar.selectbox(
         "Seleccione una seccion",
         ["Home", "Ejercicio 1", "Ejercicio 2", "Ejercicio 3", "Ejercicio 4"],
