@@ -320,7 +320,7 @@ def crear_registro_producto(codigo, nombre, costo, precio, stock_actual, stock_m
     resumen = producto.resumen()
     return {
         "Codigo": codigo.strip().upper(),
-        "Producto": resumen["producto"],
+        "Producto_Estilo": resumen["producto"],
         "Costo unitario USD": round(costo, 2),
         "Precio exportacion USD": round(precio, 2),
         "Stock actual": stock_actual,
