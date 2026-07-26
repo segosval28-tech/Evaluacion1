@@ -116,14 +116,14 @@ st.markdown(
             fill: #0f766e !important;
             color: #0f766e !important;
         }
-        ----------------------------------------------
+       /* ---------------------------------------------- */
 
         [data-testid="stSidebar"] h1,
         [data-testid="stSidebar"] h2,
-        [data-testid="stSidebar"] h3 
+        [data-testid="stSidebar"] h3, 
         [data-testid="stSidebar"] label p {
-            color: #ffffff; !important;
-            font-weigth: 700 !important;
+            color: #ffffff !important;
+            font-weight: 700 !important;
             letter-spacing: 0;
         }
         .hero-box {
