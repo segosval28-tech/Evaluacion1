@@ -580,7 +580,7 @@ def ejercicio_3():
     )
 
     with st.form("form_margen"):
-        operacion = st.text_input("Operacion o referencia", placeholder="Ej. EXP-2026-001")
+        operacion = st.text_input("Operacion o referencia (Cliente-Semana-Modo_envío)", placeholder="Ej. LACOSTE-SEM24-AEREO")
         col1, col2 = st.columns(2)
         ingresos = col1.number_input("Ingresos por venta internacional USD", min_value=0.0, step=100.0)
         costos = col2.number_input("Costo del producto USD", min_value=0.0, step=100.0)
